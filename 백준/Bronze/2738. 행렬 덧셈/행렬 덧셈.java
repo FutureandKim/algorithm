@@ -5,23 +5,24 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int m = sc.nextInt();
-        int[][] arr1 = new int[n][m];
-        int[][] arr2 = new int[n][m];
+        int[][] a = new int[n][m];
+        int[][] b = new int[n][m];
 
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++)
-                arr1[i][j] = sc.nextInt();
+                a[i][j] = sc.nextInt();
         }
 
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++)
-                arr2[i][j] = sc.nextInt();
+                b[i][j] = sc.nextInt();
         }
 
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++)
-                System.out.printf("%d ", arr1[i][j] + arr2[i][j]);
+                System.out.printf("%d ", a[i][j]+b[i][j]);
             System.out.println();
         }
+
     }
 }
