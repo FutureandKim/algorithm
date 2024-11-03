@@ -1,56 +1,52 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
         int S = sc.nextInt();
         int P = sc.nextInt();
-        String dnaStr = sc.next();
-        int[] minCount = new int[4];
-        for (int i = 0; i < 4; i++) {
-            minCount[i] = sc.nextInt();
-        }
+        String str = sc.next();
+        int[] dnaCnt = new int[4];
 
-        int[] currentCount = new int[4];
-        int validCount = 0;
+        for(int i = 0; i < 4; i++)
+            dnaCnt[i] = sc.nextInt();
 
-        // 첫 번째 윈도우 설정
-        for (int i = 0; i < P; i++) {
-            currentCount[getIndex(dnaStr.charAt(i))]++;
+        int[] containCnt = new int[4];
+        int cnt = 0;
+
+        // 배열 생성
+        for(int i = 0; i < P; i++){
+            int idx = getIndex(str.charAt(i));
+            containCnt[idx]++;
         }
-        if (isValid(currentCount, minCount)) {
-            validCount++;
-        }
+        if(isValid(dnaCnt, containCnt)) cnt++;
 
         // 슬라이딩 윈도우
-        for (int i = P; i < S; i++) {
-            currentCount[getIndex(dnaStr.charAt(i - P))]--;
-            currentCount[getIndex(dnaStr.charAt(i))]++;
+        for(int i = P; i < S; i++){
+            int removeIdx = getIndex(str.charAt(i - P));
+            int addIdx = getIndex(str.charAt(i));
+            containCnt[removeIdx]--;
+            containCnt[addIdx]++;
 
-            if (isValid(currentCount, minCount)) {
-                validCount++;
-            }
+            if(isValid(dnaCnt, containCnt)) cnt++;
         }
-
-        // 결과 출력
-        System.out.println(validCount);
+        System.out.println(cnt);
     }
 
-    // 문자의 인덱스를 반환하는 함수
-    private static int getIndex(char ch) {
-        switch (ch) {
+    public static int getIndex(char c){
+        switch (c){
             case 'A': return 0;
             case 'C': return 1;
             case 'G': return 2;
             case 'T': return 3;
-            default: return -1;
         }
+        return -1;
     }
 
-    // 현재 카운트가 조건을 만족하는지 확인하는 함수
-    private static boolean isValid(int[] currentCount, int[] minCount) {
-        return currentCount[0] >= minCount[0] && currentCount[1] >= minCount[1] &&
-               currentCount[2] >= minCount[2] && currentCount[3] >= minCount[3];
+    public static boolean isValid (int[] dnaCnt, int[] containCnt){
+        return containCnt[0] >= dnaCnt[0] && containCnt[1] >= dnaCnt[1] &&
+                containCnt[2] >= dnaCnt[2] && containCnt[3] >= dnaCnt[3];
     }
+
 }
